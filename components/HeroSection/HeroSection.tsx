@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => {
     }, []);
 
     return (
-        <div className='container mx-auto flex-1 px-5 py-20 flex flex-col lg:flex-row gap-10 overflow-hidden'>
+        <div className='container mx-auto h-full px-5 py-20 flex flex-col lg:flex-row gap-10 overflow-hidden'>
             <div className=' w-full flex flex-col gap-10 justify-between'>
                 <div>
                     <h1 className='text-4xl lg:text-8xl font-semibold gradient-text-2 pb-10'>

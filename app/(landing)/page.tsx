@@ -10,9 +10,9 @@ import React from 'react'
 const page = () => {
     return (
         <div>
-            <div className=' relative overflow-x-hidden min-h-screen flex flex-col'>
+            <div className=' relative overflow-x-hidden h-full flex flex-col'>
                 <TransparentNavbar />
-                <div className=' flex-1 flex flex-col'>
+                <div className=' flex-1'>
                     <HeroSection />
                 </div>
                 <div className="absolute  inset-0 pointer-events-none flex justify-center items-center">

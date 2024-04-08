@@ -76,10 +76,13 @@ export async function getProject(id: string) {
         const user = await currentUser();
         const project = await prisma.project.findUnique({ where: { userId: user?.id as string, id: id } })
 
-        return { project, status: 200 };
+        if (!project) {
+            return { error: "Project not found", status: 404 };
+        }
+
+        return { project: project, status: 200 };
     } catch (error) {
         console.log(error);
-
         return { error: "server error", status: 500 };
     }
 }

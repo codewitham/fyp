@@ -10,10 +10,15 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
+import { redirect } from 'next/navigation'
 
 const ProjectPage = async ({ id }: { id: string }) => {
+    const { project, status, error } = await getProject(id) as { project?: Project; status: number; error: string };
 
-    const { project } = await getProject(id) as { project: Project };
+    if (!project || error || status === 500) {
+        return redirect("/dashboard");
+    }
+
 
     return (
         <div className=' h-screen flex flex-col bg-gray-100 overflow-hidden'>
