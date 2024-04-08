@@ -60,7 +60,7 @@ const CreateProject = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button className=' bg-orange-500 hover:bg-orange-600' size={"icon"}>
-                    <Plus className=' h-4 w-4 ml-2' />
+                    <Plus className=' h-4 w-4 ' />
                 </Button>
             </DialogTrigger>
             <DialogContent className=' rounded-lg'>
