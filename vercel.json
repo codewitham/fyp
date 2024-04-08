@@ -1,6 +1,6 @@
 {
     "functions": {
-        "lib/actions/gemini-ai-config.ts": {
+        "generateChat": {
             "maxDuration": 10
         }
     }
