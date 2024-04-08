@@ -1,9 +1,0 @@
-{
-    "version": 2,
-    "functions": {
-        "lib/gemini-ai-config.ts": {
-            "memory": 3009,
-            "maxDuration": 30
-        }
-    }
-}
