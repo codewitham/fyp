@@ -13,7 +13,7 @@ const DashboardPage = async () => {
     const { projects } = await getProjects();
     return (
         <div className=' container py-20 mx-auto px-5'>
-            <div className=' flex items-center justify-between'>
+            <div className=' flex items-center gap-2 justify-between max-w-full '>
                 <Input type='text' placeholder='search...' className=' w-fit' />
                 <CreateProject />
             </div>
