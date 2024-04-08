@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Download, Share, Share2, Trash2 } from 'lucide-react'
 import { deleteProject } from '@/lib/actions/project.actions'
 import { toast } from '../ui/use-toast';
+import { redirect } from 'next/navigation';
 
 const ProjectNavbar = ({ id }: { id: string }) => {
     const handleDelete = async () => {
@@ -12,6 +13,7 @@ const ProjectNavbar = ({ id }: { id: string }) => {
         if (res.error) {
             return toast({ title: res.error });
         }
+        redirect("/dashboard")
         return toast({ title: "Project deleted!" })
     }
     return (
