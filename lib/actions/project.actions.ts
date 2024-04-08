@@ -2,25 +2,20 @@
 import { revalidatePath } from "next/cache";
 import prisma from "../db";
 import { currentUser } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateChat } from "../gemini-ai-config";
 
 export async function editProject({ id, prompt, code, manual }: { id: string, prompt: string, code: string, manual: boolean }) {
     try {
         const user = await currentUser();
-        const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 
         if (!manual) {
-            const extendedPrompt = `You are an AI capable of generating only html,css, js code inside html using script, style tags. In the response, only provide code, nothing else. Here is the brief description of the site: ${prompt}.`;
-            const result = await model.generateContent(extendedPrompt);
-            const response = result.response;
-            const res = response.text();
-            const code = res.replace(/```html|```/g, '');
+            const genCode = await generateChat(prompt);
+
             const project = await prisma.project.update({
                 where: { id: id, userId: user?.id }, data: {
                     prompt: prompt,
-                    code: code
+                    code: genCode
                 }
             })
             revalidatePath("/")
