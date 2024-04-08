@@ -1,7 +1,7 @@
 {
     "functions": {
         "lib/actions/gemini-ai-config.ts": {
-            "maxDuration": 200
+            "maxDuration": 10
         }
     }
 }
