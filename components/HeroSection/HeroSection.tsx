@@ -60,7 +60,7 @@ const HeroSection: React.FC = () => {
                 </div>
             </div>
             <div className='w-full relative rounded-3xl overflow-hidden'>
-                <img src="https://www.inovex.de/wp-content/uploads/generative-ai-hero.jpg" alt="avtar" className='h-full w-full object-cover' />
+                <img src="https://www.inovex.de/wp-content/uploads/generative-ai-hero.jpg" alt="avtar" className='min-h-[400px] h-full w-full object-cover' />
 
                 <div className=' absolute m-5 bottom-0 left-0 right-0 '>
                     <div className=' w-full rounded-2xl p-5 bg-white/80 backdrop-blur-lg border-t-4 border-orange-300'>
