@@ -17,7 +17,7 @@ const CodeEditor = ({ project }: { project: Project }) => {
     const [editorValue, setEditorValue] = useState("");
 
     useEffect(() => {
-        setEditorValue(project.code)
+        setEditorValue(project?.code || "")
     }, [project])
 
     const saveCode = async () => {
