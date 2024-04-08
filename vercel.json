@@ -1,7 +1,0 @@
-{
-    "functions": {
-        "generateChat": {
-            "maxDuration": 10
-        }
-    }
-}
