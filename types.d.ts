@@ -3,5 +3,6 @@ interface Project {
     code: string,
     userId: string,
     id: string,
-    prompt: string
+    prompt: string,
+    file: string?
 }

@@ -8,11 +8,15 @@ const DashboardComponent: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [generatedCode, setGeneratedCode] = useState<string>('');
 
-    const handleSubmit = async (promptText: string) => {
+    const handleSubmit = async (promptText: string, pdfFile: File | null) => {
         setLoading(true);
+
+        console.log(promptText, pdfFile);
+
         const result = await GenerateUI(promptText);
 
-        if (result.status === 500) {
+
+        if (result && result.error) {
             console.error(result.error);
         } else {
             setGeneratedCode(result?.code as string);
@@ -36,3 +40,4 @@ const DashboardComponent: React.FC = () => {
 };
 
 export default DashboardComponent;
+

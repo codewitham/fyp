@@ -1,20 +1,35 @@
 'use server'
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
 export async function GenerateUI(prompt: string) {
     try {
-        const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = new ChatGoogleGenerativeAI({
+            modelName: "gemini-1.0-pro",
+            maxOutputTokens: 2048,
+            apiKey: process.env.API_KEY
+        });
 
-        const extendedPrompt = `You are an AI capable of generating only html,css, js code inside html using script, style tags. In the response, only provide code, nothing else. Here is the brief description of the site: ${prompt}.`;
-        const result = await model.generateContent(extendedPrompt);
-        const response = result.response;
-        let code = response.text();
+        const res = await model.invoke([
+            [
+                "human",
+                `generate html, css and js code as html one file no external css, js files. based on description: ${prompt}.`,
+            ],
+        ]);
 
-        code = code.replace(/```html|```/g, '');
+        if (res && res.content) {
+            const code = res.content.toString();
+            console.log(code);
 
-        return { code: code.trim(), status: 200 };
+            const trimmedCode = code.replace(/```html|```/g, '');
+
+            return { code: trimmedCode.trim(), status: 200 };
+        } else {
+            return { error: "api issue", status: 400 };
+        }
     } catch (error) {
+        console.error("Error:", error);
         return { error: "server error", status: 500 };
     }
 }
+

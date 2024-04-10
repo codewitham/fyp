@@ -1,10 +1,11 @@
 'use server';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import { pdfToPrompt } from "./pdf-reader";
 
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = process.env.API_KEY || "";
 
-export async function generateChat(prompt: string) {
+export async function generateChat(prompt: string, file?: string) {
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
@@ -12,7 +13,7 @@ export async function generateChat(prompt: string) {
         temperature: 0.1,
         topK: 1,
         topP: 1,
-        maxOutputTokens: 1000,
+        maxOutputTokens: 2000,
     };
 
     const safetySettings = [
@@ -41,8 +42,22 @@ export async function generateChat(prompt: string) {
         ],
     });
 
-    const result = await chat.sendMessage(`You are an AI capable of generating only html,css, js code inside html using script, style tags. In the response, only provide code, nothing else. Here is the brief description of the site: ${prompt}.`);
+    let text = '';
+
+    if (file) {
+        const { text: extractedText } = await pdfToPrompt(file);
+
+        if (extractedText !== undefined) {
+            text = extractedText;
+        }
+    }
+
+    // console.log("{text}: ", text);
+
+
+    const result = await chat.sendMessage(`You are an AI capable of generating only html,css, js code inside html using script, style tags. No external css and js files and for images use div or placeholder images if needed.  Here is the brief description of the site: ${prompt}.${text ? "resume or docs:  " + text : ''}.`);
     const response = result.response;
+
     const code = response.text().replace(/```html|```/g, '');
     return code;
 }

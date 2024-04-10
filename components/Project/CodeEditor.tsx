@@ -7,6 +7,8 @@ import { tags as t } from '@lezer/highlight';
 import { editProject, getProject } from '@/lib/actions/project.actions';
 import { toast } from '../ui/use-toast';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '@radix-ui/react-label';
 
 interface GenerationProps {
     code: string;
@@ -15,23 +17,35 @@ interface GenerationProps {
 
 const CodeEditor = ({ project }: { project: Project }) => {
     const [editorValue, setEditorValue] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [name, setName] = useState("");
 
     useEffect(() => {
-        setEditorValue(project?.code || "")
+        setEditorValue(project?.code || "");
+        setName(project?.name || "");
     }, [project])
 
     const saveCode = async () => {
-        const res = await editProject({ id: project.id, prompt: project.prompt || "", code: editorValue, manual: true })
-        if (res.error) {
-            return toast({ title: res.error, variant: "destructive" })
+        try {
+            const res = await editProject({ id: project.id, prompt: project.prompt || "", code: editorValue, manual: true, name: name });
+            if (res.error) {
+                return toast({ title: res.error, variant: "destructive" });
+            }
+            return toast({ title: "Code updated!" });
+        } catch (error) {
+            console.log(error);
+            return toast({ title: "Error" });
+        } finally {
+            setLoading(false);
         }
-        return toast({ title: "code updated!" })
     }
-
-
 
     return (
         <div className=' h-full w-full text-left'>
+            <div className=' flex flex-col gap-2 mb-5'>
+                <Label htmlFor='name'>Project Name*</Label>
+                <Input type='text' name='name' placeholder='Project name...' value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
             <CodeMirror
                 value={editorValue}
                 onChange={async (value, viewUpdate) => {
@@ -49,10 +63,9 @@ const CodeEditor = ({ project }: { project: Project }) => {
                 })}
                 extensions={[javascript({ jsx: true })]}
             />
-
-            <Button className=' mt-2 w-full' onClick={saveCode}>save</Button>
+            <Button className=' mt-2 w-full' disabled={loading} onClick={saveCode}>Save</Button>
         </div>
     )
 }
 
-export default CodeEditor
+export default CodeEditor;

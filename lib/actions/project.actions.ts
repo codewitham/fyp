@@ -3,19 +3,24 @@ import { revalidatePath } from "next/cache";
 import prisma from "../db";
 import { currentUser } from "@clerk/nextjs/server";
 import { generateChat } from "../gemini-ai-config";
+import { pdfToPrompt } from "../pdf-reader";
 
-export async function editProject({ id, prompt, code, manual }: { id: string, prompt: string, code: string, manual: boolean }) {
+export async function editProject({ id, name, prompt, code, file, manual }: { name?: string, id: string, file?: string, prompt: string, code: string, manual: boolean }) {
     try {
         const user = await currentUser();
 
+        console.log("server: ", code, file, manual);
+
+
 
         if (!manual) {
-            const genCode = await generateChat(prompt);
+            const genCode = await generateChat(prompt, file);
 
             const project = await prisma.project.update({
                 where: { id: id, userId: user?.id }, data: {
                     prompt: prompt,
-                    code: genCode
+                    code: genCode,
+                    file: file,
                 }
             })
             revalidatePath("/")
@@ -27,7 +32,8 @@ export async function editProject({ id, prompt, code, manual }: { id: string, pr
         const project = await prisma.project.update({
             where: { id: id, userId: user?.id }, data: {
                 prompt: prompt,
-                code: code
+                code: code,
+                name: name
             }
         })
 
