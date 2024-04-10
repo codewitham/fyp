@@ -11,10 +11,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from 'next/navigation';
 
 
 const AuthMenu = async () => {
     const user = await currentUser();
+    const router = useRouter();
 
     if (!user) return (
         <Link href={"/sign-in"}>
@@ -42,7 +44,7 @@ const AuthMenu = async () => {
 
                     <DropdownMenuItem>Settings</DropdownMenuItem>
                     <DropdownMenuItem>Subscription</DropdownMenuItem>
-                    <SignOutButton>
+                    <SignOutButton signOutCallback={() => router.push("/")}>
                         <DropdownMenuItem>sign out</DropdownMenuItem>
                     </SignOutButton>
                 </DropdownMenuContent>
