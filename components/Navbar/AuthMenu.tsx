@@ -44,7 +44,7 @@ const AuthMenu = async () => {
 
                     <DropdownMenuItem>Settings</DropdownMenuItem>
                     <DropdownMenuItem>Subscription</DropdownMenuItem>
-                    <SignOutButton signOutCallback={() => redirect("/")}>
+                    <SignOutButton>
                         <DropdownMenuItem>sign out</DropdownMenuItem>
                     </SignOutButton>
                 </DropdownMenuContent>
