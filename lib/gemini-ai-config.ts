@@ -1,3 +1,4 @@
+'use server';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { pdfToPrompt } from "./pdf-reader";
 

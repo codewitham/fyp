@@ -2,25 +2,22 @@
 import React, { useState } from 'react';
 import GenerationComponent from './GenerationComponent';
 import PromptComponent from './PromptComponent';
-import { GenerateUI } from '@/lib/actions/gemini-ai.actions';
+import { generateChat } from '@/lib/gemini-ai-config';
 
 const DashboardComponent: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [generatedCode, setGeneratedCode] = useState<string>('');
 
-    const handleSubmit = async (promptText: string, pdfFile: File | null) => {
+    const handleSubmit = async (promptText: string) => {
         setLoading(true);
 
-        console.log(promptText, pdfFile);
+        console.log(promptText);
 
-        const result = await GenerateUI(promptText);
+        const result = await generateChat(promptText);
+        console.log(result);
 
 
-        if (result && result.error) {
-            console.error(result.error);
-        } else {
-            setGeneratedCode(result?.code as string);
-        }
+        setGeneratedCode(result);
 
         setLoading(false);
     };
@@ -40,4 +37,3 @@ const DashboardComponent: React.FC = () => {
 };
 
 export default DashboardComponent;
-
