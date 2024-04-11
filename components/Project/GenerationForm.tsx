@@ -69,7 +69,7 @@ const GenerationForm = ({ project }: { project: Project }) => {
 
             const code = await editProject({
                 id: project.id,
-                file: fileUrl || "",
+                file: fileUrl,
                 prompt: values.prompt,
                 code: project.code,
                 manual: false

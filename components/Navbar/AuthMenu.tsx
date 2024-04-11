@@ -12,8 +12,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { redirect, useRouter } from 'next/navigation';
-
 
 const AuthMenu = async () => {
     const user = await currentUser();

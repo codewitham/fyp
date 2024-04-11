@@ -8,7 +8,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Button } from '../ui/button'
-import { LogIn, Menu } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import AuthMenu from './AuthMenu'
 
