@@ -55,7 +55,7 @@ export async function generateChat(prompt: string, file?: string) {
     // console.log("{text}: ", text);
 
 
-    const result = await chat.sendMessage(`You are an AI capable of generating only html,css, js code inside html using script, style tags. No external css and js files and for images use div or placeholder images if needed.  Here is the brief description of the site: ${prompt}.${text ? "resume or docs:  " + text : ''}.`);
+    const result = await chat.sendMessage(`You are an AI capable of generating only html,css, js code inside html using script, style tags. Include tailwind css for most of ui work "<script src="https://cdn.tailwindcss.com"></script>". No external css and js files and for images use div or placeholder images if needed.  Here is the brief description of the site: ${prompt}.${text ? "resume or docs:  " + text : ''}.`);
     const response = result.response;
 
     const code = response.text().replace(/```html|```/g, '');

@@ -9,12 +9,15 @@ export async function editProject({ id, name, prompt, code, file, manual }: { na
     try {
         const user = await currentUser();
 
-        console.log("server: ", code, file, manual);
+        // console.log("server: ", code, file, manual);
 
 
 
         if (!manual) {
             const genCode = await generateChat(prompt, file);
+
+            console.log("generated code: ", genCode);
+
 
             const project = await prisma.project.update({
                 where: { id: id, userId: user?.id }, data: {

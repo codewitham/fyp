@@ -17,14 +17,10 @@ const TransparentNavbar = () => {
                             Home
                         </Button>
                     </Link>
-                    <Link href={"/"}>
+
+                    <Link href={"/docs"}>
                         <Button variant={"ghost"}>
-                            About
-                        </Button>
-                    </Link>
-                    <Link href={"/"}>
-                        <Button variant={"ghost"}>
-                            Contact
+                            Docs
                         </Button>
                     </Link>
                     <AuthMenu />

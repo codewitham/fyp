@@ -20,6 +20,7 @@ import {
 import GenerationForm from './GenerationForm';
 import CodeEditor from './CodeEditor';
 import { copyCodeToClipboard } from '@/lib/hooks';
+import { UserButton } from '@clerk/nextjs';
 
 const ProjectSidebar = ({ project }: { project: Project }) => {
     const dispatch = useDispatch()
@@ -41,8 +42,10 @@ const ProjectSidebar = ({ project }: { project: Project }) => {
                             <Settings className='h-4 w-4' />
                         </Button>
                     </DrawerTrigger>
-                    <DrawerContent className='p-5'>
-                        <GenerationForm project={project} />
+                    <DrawerContent className='p-5 h-[550px] overflow-hidden'>
+                        <div className=' overflow-y-auto'>
+                            <GenerationForm project={project} />
+                        </div>
                     </DrawerContent>
                 </Drawer >
                 <Drawer>
@@ -51,8 +54,10 @@ const ProjectSidebar = ({ project }: { project: Project }) => {
                             <Code className='h-4 w-4' />
                         </Button>
                     </DrawerTrigger>
-                    <DrawerContent className='p-5'>
-                        <CodeEditor project={project} />
+                    <DrawerContent className='p-5 h-[550px] overflow-hidden'>
+                        <div className=' overflow-y-auto'>
+                            <CodeEditor project={project} />
+                        </div>
                     </DrawerContent>
                 </Drawer >
             </div >
@@ -85,6 +90,9 @@ const ProjectSidebar = ({ project }: { project: Project }) => {
             <Button onClick={() => copyCodeToClipboard(project.code)} variant={"ghost"} className=' text-white hover:text-orange-500' size={"icon"}>
                 <CopyIcon className=' h-4 w-4' />
             </Button>
+            <div className=' mb-0 mt-auto mx-auto'>
+                <UserButton afterSignOutUrl='/' />
+            </div>
         </div>
     )
 }

@@ -4,5 +4,7 @@ interface Project {
     userId: string,
     id: string,
     prompt: string,
-    file: string?
+    file: string?,
+    createdAt: Date,
+    updatedAt: Date,
 }

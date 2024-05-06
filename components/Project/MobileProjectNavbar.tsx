@@ -21,11 +21,13 @@ const MobileProjectNavbar = ({ project }: { project: Project }) => {
                         <Settings className='h-4 w-4' />
                     </Button>
                 </DialogTrigger>
-                <DialogContent className=' rounded-lg'>
+                <DialogContent className=' rounded-lg h-[400px] overflow-hidden'>
                     <DialogHeader>
                         <DialogTitle>Generate UI</DialogTitle>
                     </DialogHeader>
-                    <GenerationForm project={project} />
+                    <div className=' overflow-y-auto '>
+                        <GenerationForm project={project} />
+                    </div>
                 </DialogContent>
             </Dialog>
 
@@ -35,11 +37,11 @@ const MobileProjectNavbar = ({ project }: { project: Project }) => {
                         <Code className='h-4 w-4' />
                     </Button>
                 </DialogTrigger>
-                <DialogContent className='  rounded-lg'>
+                <DialogContent className=' h-[400px] overflow-hidden rounded-lg'>
                     <DialogHeader>
                         <DialogTitle>Source Code</DialogTitle>
                     </DialogHeader>
-                    <div>
+                    <div className=' overflow-y-auto'>
                         <CodeEditor project={project} />
                     </div>
                 </DialogContent>

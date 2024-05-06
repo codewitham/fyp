@@ -19,6 +19,8 @@ import { Textarea } from "../ui/textarea";
 import { editProject } from "@/lib/actions/project.actions";
 import { toast } from "../ui/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Label } from "../ui/label";
+import { Bird, Rabbit, Turtle } from "lucide-react";
 
 const formSchema = z.object({
     name: z.string().min(4, {
@@ -71,7 +73,6 @@ const GenerationForm = ({ project }: { project: Project }) => {
                     manual: false
                 });
 
-                console.log(code);
                 return toast({ title: "UI Updated!" })
 
             }
@@ -84,7 +85,6 @@ const GenerationForm = ({ project }: { project: Project }) => {
                 manual: false
             });
 
-            console.log(code);
 
             return toast({ title: "UI updated!" });
 
@@ -99,79 +99,160 @@ const GenerationForm = ({ project }: { project: Project }) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 h-full'>
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Generate a site for my interview portfolio..." {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                change name of project.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 h-full '>
+                <fieldset className="grid gap-6 rounded-lg border p-4">
+                    <legend className="-ml-1 px-1 text-sm font-medium">
+                        Settings
+                    </legend>
+                    <div className="grid gap-3">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Generate a site for my interview portfolio..." {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        change name of project.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Label htmlFor="model">Model</Label>
+                        <Select>
+                            <SelectTrigger
+                                id="model"
+                                className="items-start [&_[data-description]]:hidden"
+                            >
+                                <SelectValue placeholder="Select a model" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="genesis">
+                                    <div className="flex items-start gap-3 text-muted-foreground">
+                                        <Rabbit className="size-5" />
+                                        <div className="grid gap-0.5">
+                                            <p>
+                                                Neural{" "}
+                                                <span className="font-medium text-foreground">
+                                                    Genesis
+                                                </span>
+                                            </p>
+                                            <p className="text-xs" data-description>
+                                                Our fastest model for general use cases.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </SelectItem>
+                                <SelectItem value="explorer">
+                                    <div className="flex items-start gap-3 text-muted-foreground">
+                                        <Bird className="size-5" />
+                                        <div className="grid gap-0.5">
+                                            <p>
+                                                Neural{" "}
+                                                <span className="font-medium text-foreground">
+                                                    Explorer
+                                                </span>
+                                            </p>
+                                            <p className="text-xs" data-description>
+                                                Performance and speed for efficiency.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </SelectItem>
+                                <SelectItem value="quantum">
+                                    <div className="flex items-start gap-3 text-muted-foreground">
+                                        <Turtle className="size-5" />
+                                        <div className="grid gap-0.5">
+                                            <p>
+                                                Neural{" "}
+                                                <span className="font-medium text-foreground">
+                                                    Quantum
+                                                </span>
+                                            </p>
+                                            <p className="text-xs" data-description>
+                                                The most powerful model for complex
+                                                computations.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    {/* <div className="grid gap-3">
+                        <Label htmlFor="temperature">Temperature</Label>
+                        <Input id="temperature" type="number" placeholder="0.4" />
+                    </div> */}
+                </fieldset>
 
-                <FormField
-                    control={form.control}
-                    name="framework"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Framework</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={"tailwind"}>
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select a framework" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    <SelectItem value="tailwind">tailwind css</SelectItem>
-                                    <SelectItem value="bootstrap">bootstrap css</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <FormDescription>
-                                Please select a framework.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="prompt"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Prompt</FormLabel>
-                            <FormControl>
-                                <Textarea rows={10} placeholder="Generate a site for my interview portfolio..." {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Briefly explain your site.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <Input
-                    type="file"
-                    onChange={(e) => {
-                        setFile(e.target.files?.[0]);
-                    }}
-                />
-
-                {fileUrl &&
-                    <Input type="text" value={`prev. ${fileUrl}`} readOnly />
-                }
+                <fieldset className="grid gap-6 rounded-lg border p-4">
+                    <legend className="-ml-1 px-1 text-sm font-medium">
+                        prompt
+                    </legend>
+                    <div className="grid gap-3">
 
 
-                <Button type="submit" disabled={loading}>Submit</Button>
+                        <FormField
+                            control={form.control}
+                            name="framework"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Framework</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={"tailwind"}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a framework" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="tailwind">tailwind css</SelectItem>
+                                            <SelectItem value="bootstrap">bootstrap css</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        Please select a framework.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="prompt"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Prompt</FormLabel>
+                                    <FormControl>
+                                        <Textarea rows={10} placeholder="Generate a site for my interview portfolio..." {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Briefly explain your site.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <Input
+                            type="file"
+                            onChange={(e) => {
+                                setFile(e.target.files?.[0]);
+                            }}
+                        />
+
+                        {fileUrl &&
+                            <Input type="text" value={`prev. ${fileUrl}`} readOnly />
+                        }
+                    </div>
+                </fieldset>
+                <div className=" pb-5">
+
+                    <Button type="submit" disabled={loading}>Submit</Button>
+                </div>
             </form>
         </Form>
     );

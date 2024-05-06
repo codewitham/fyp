@@ -21,8 +21,8 @@ const ProjectPage = ({ project }: { project: Project }) => {
             <ProjectSidebar project={project} />
             <div className='flex-1 flex flex-col overflow-hidden'>
                 <ProjectNavbar project={project} />
-                <div className='h-full w-full grid grid-cols-3 lg:grid-cols-4 gap-5'>
-                    <div className='px-5 py-10 hidden lg:block bg-white h-full'>
+                <div className='h-full w-full grid grid-cols-3 lg:grid-cols-4 gap-5 overflow-hidden'>
+                    <div className='px-5 py-5 hidden lg:block bg-white h-full overflow-y-auto'>
                         {sidebar === 1 ?
                             <GenerationForm project={project} />
                             :
