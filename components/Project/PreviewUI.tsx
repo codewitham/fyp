@@ -3,7 +3,7 @@ import React from 'react'
 
 const PreviewUI = ({ project }: { project: Project }) => {
     return (
-        <div className=' h-full w-full bg-gray-100 p-10 overflow-auto flex items-center justify-center'>
+        <div className=' h-full w-full bg-gray-100 p-5 md:p-10 overflow-auto flex items-center justify-center'>
             <iframe
                 title="code-preview"
                 className="w-full h-full border-none bg-white"
