@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { atomoneInit } from '@uiw/codemirror-theme-atomone';
@@ -16,33 +16,36 @@ interface GenerationProps {
 }
 
 const CodeEditor = ({ project }: { project: Project }) => {
-    const [editorValue, setEditorValue] = useState("");
+    const [editorValue, setEditorValue] = useState(project.code || "");
     const [loading, setLoading] = useState(false);
-    const [name, setName] = useState("");
+    const [name, setName] = useState(project.name || "");
 
-    useEffect(() => {
-        setEditorValue(project?.code || "");
-        setName(project?.name || "");
+    // useEffect(() => {
+    //     setEditorValue(project?.code || "");
+    //     setName(project?.name || "");
 
-        const handleKeyDown = (event: KeyboardEvent) => {
-            // Check if Command (⌘) key is pressed along with 'S'
-            if (event.metaKey && event.key === 's') {
-                event.preventDefault(); // Prevent the default action (saving the page)
-                saveCode(); // Call the saveCode function
-            }
-        };
+    //     const handleKeyDown = (event: KeyboardEvent) => {
+    //         // Check if Command (⌘) key is pressed along with 'S'
+    //         if (event.metaKey && event.key === 's') {
+    //             event.preventDefault(); // Prevent the default action (saving the page)
+    //             saveCode(); // Call the saveCode function
+    //         }
+    //     };
 
-        // Add event listener for keydown event
-        window.addEventListener('keydown', handleKeyDown);
+    //     // Add event listener for keydown event
+    //     window.addEventListener('keydown', handleKeyDown);
 
-        // Cleanup function to remove event listener
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [project, editorValue, name]); // Add project, editorValue, and name to dependency array
+    //     // Cleanup function to remove event listener
+    //     return () => {
+    //         window.removeEventListener('keydown', handleKeyDown);
+    //     };
+    // }, [project, editorValue, name]); // Add project, editorValue, and name to dependency array
 
     const saveCode = async () => {
         try {
+            if (name.length <= 3) {
+                return toast({ title: "please add atleast 4 characters in name." })
+            }
             setLoading(true); // Set loading state to true while saving
             const res = await editProject({ id: project.id, prompt: project.prompt || "", code: editorValue, manual: true, name: name });
             if (res.error) {
