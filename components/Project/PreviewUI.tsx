@@ -1,7 +1,7 @@
 import { getProject } from '@/lib/actions/project.actions'
 import React from 'react'
 
-const PreviewUI = async ({ project }: { project: Project }) => {
+const PreviewUI = ({ project }: { project: Project }) => {
     return (
         <div className=' h-full w-full bg-gray-100 p-10 overflow-auto flex items-center justify-center'>
             <iframe

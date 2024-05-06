@@ -1,7 +1,5 @@
 import React from 'react'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Plus } from 'lucide-react'
 import ProjectCard from './ProjectCard'
 import moment from "moment"
 import CreateProject from './CreateProject'
@@ -11,6 +9,7 @@ import { getProjects } from '@/lib/actions/project.actions'
 
 const DashboardPage = async () => {
     const { projects } = await getProjects();
+
     return (
         <div className=' container py-20 mx-auto px-5'>
             <div className=' flex items-center gap-2 justify-between max-w-full '>

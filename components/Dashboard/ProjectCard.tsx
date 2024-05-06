@@ -25,12 +25,13 @@ const ProjectCard = ({ name, code, date, id }: ProjectCard) => {
 
     return (
         <Card className=' overflow-hidden shadow-none border-none'>
-            <div className=' h-48 w-full overflow-hidden'>
+            <div className=' relative h-48 w-full overflow-hidden'>
                 <iframe
                     title="code-preview"
-                    className="h-full w-full"
+                    className="h-full w-full object-contain"
                     srcDoc={code as string}
                 />
+                <div className=' absolute top-0 left-0  h-full w-full'></div>
             </div>
             <CardContent className='flex justify-between items-center mt-5'>
                 <div>

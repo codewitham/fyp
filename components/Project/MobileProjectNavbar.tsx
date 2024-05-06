@@ -39,7 +39,7 @@ const MobileProjectNavbar = ({ project }: { project: Project }) => {
                     <DialogHeader>
                         <DialogTitle>Source Code</DialogTitle>
                     </DialogHeader>
-                    <div className=' overflow-hidden'>
+                    <div>
                         <CodeEditor project={project} />
                     </div>
                 </DialogContent>

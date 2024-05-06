@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from '@clerk/nextjs'
 import { EdgeStoreProvider } from '../lib/edgestore';
+import StoreProvider from "./StoreProvider";
 
 const font = Poppins({ subsets: ["latin"], weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"] });
 
@@ -25,12 +26,15 @@ export default function RootLayout({
         }
       }}
     >
-      <html lang="en">
-        <body className={font.className}>
-          <EdgeStoreProvider>{children}</EdgeStoreProvider>
-          <Toaster />
-        </body>
-      </html>
+      <StoreProvider>
+        <html lang="en">
+          <body className={font.className}>
+            {children}
+            <Toaster />
+          </body>
+        </html>
+      </StoreProvider>
     </ClerkProvider>
+
   );
 }
