@@ -1,8 +1,14 @@
+import { BgNavbar } from '@/components/Navbar/Navbar'
 import React from 'react'
 
 const page = () => {
     return (
-        <div>docs</div>
+        <div>
+            <BgNavbar />
+            <div>
+                docs
+            </div>
+        </div>
     )
 }
 

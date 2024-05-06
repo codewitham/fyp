@@ -31,14 +31,10 @@ const MobileMenu = () => {
                             Home
                         </Button>
                     </Link>
-                    <Link href={"/"}>
+
+                    <Link href={"/docs"}>
                         <Button variant={"ghost"} className=' w-full'>
-                            About
-                        </Button>
-                    </Link>
-                    <Link href={"/"}>
-                        <Button variant={"ghost"} className=' w-full'>
-                            Contact
+                            Docs
                         </Button>
                     </Link>
 

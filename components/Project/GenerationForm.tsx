@@ -18,10 +18,17 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { editProject } from "@/lib/actions/project.actions";
 import { toast } from "../ui/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 const formSchema = z.object({
+    name: z.string().min(4, {
+        message: "name must contain 4 characters."
+    }),
     prompt: z.string().min(10, {
         message: "Prompt must be at least 10 characters.",
+    }),
+    framework: z.string({
+        required_error: "Please select an framework to generate code.",
     }),
 });
 
@@ -34,7 +41,9 @@ const GenerationForm = ({ project }: { project: Project }) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            name: project.name,
             prompt: project?.prompt || "",
+            framework: "",
         },
     });
 
@@ -91,6 +100,48 @@ const GenerationForm = ({ project }: { project: Project }) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 h-full'>
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>name</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Generate a site for my interview portfolio..." {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                change name of project.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="framework"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Framework</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={"tailwind"}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a framework" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="tailwind">tailwind css</SelectItem>
+                                    <SelectItem value="bootstrap">bootstrap css</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormDescription>
+                                Please select a framework.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <FormField
                     control={form.control}
                     name="prompt"
